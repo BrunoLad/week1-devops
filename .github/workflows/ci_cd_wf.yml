@@ -26,4 +26,9 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run tests
         run: |
-          python -m pytest -v tests
+          - if [${{ github.event_name == 'pull_request' }}] then python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src -v tests/ | tee pytest-coverage.txt; else python -m pytest -v tests; fi
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
