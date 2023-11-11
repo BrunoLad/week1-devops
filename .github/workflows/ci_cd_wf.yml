@@ -28,6 +28,14 @@ jobs:
         run: |
           if [ ${{ github.event_name == 'pull_request' }} ]; then
             python -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src -v tests/ | tee pytest-coverage.txt;
+              # get coverage percentage from outputted pytest-coverage.txt
+              coverage=$(grep 'TOTAL'  pytest-coverage.txt | awk '{print $4}')
+              # remove % for comparison, using suffix-removing expansion
+              coverage=${coverage%"%"}
+              if [ $coverage -lt ${{ vars.MINIMUM_COVERAGE }} ]; then
+                echo ${{ github.event.number }};
+                echo 'Coverage less than threshold';
+              fi
             else
               python -m pytest -v tests/;
           fi
