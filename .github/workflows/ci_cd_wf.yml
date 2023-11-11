@@ -39,7 +39,7 @@ jobs:
                 -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                 https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }}/comments \
-                -d '{"body":"Coverage is less than threshold of ${{ vars.MINIMUM_COVERAGE }}%","commit_id":"${{ github.sha }}","path":"src/calculator.py"}'
+                -d '{"body":"Coverage is less than threshold of ${{ vars.MINIMUM_COVERAGE }}%","commit_id":"${{ github.sha }}","path":"src/calculator.py", "subject_type": "file"}'
               fi
             else
               python -m pytest -v tests/;
