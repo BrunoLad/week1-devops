@@ -33,6 +33,8 @@ jobs:
               # remove % for comparison, using suffix-removing expansion
               coverage=${coverage%"%"}
               if [ $coverage -lt ${{ vars.MINIMUM_COVERAGE }} ]; then
+              ls
+              git status
               # Gets first changed file
               git checkout --force main
               git checkout --force ${{ github.event.pull_request.head.ref }}
