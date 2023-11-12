@@ -34,10 +34,10 @@ jobs:
               coverage=${coverage%"%"}
               if [ $coverage -lt ${{ vars.MINIMUM_COVERAGE }} ]; then
               # Gets first changed file
-              # git checkout --force main
-              # git checkout --force ${{ github.event.pull_request.head.ref }}
+              git checkout --force main
+              git checkout --force ${{ github.event.pull_request.head.ref }}
               CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.event.pull_request.base.sha }} | head -n -1)
-              # git checkout --force -
+              git checkout --force -
               # Creates Review Comments getting first file in changes
               # An idea is to add additional comments for each file with coverage less than
               # vars.MINIMUM_COVERAGE, but file would need to be part of changes. So scenario
