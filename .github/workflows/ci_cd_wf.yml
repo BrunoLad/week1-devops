@@ -42,7 +42,7 @@ jobs:
               # Gets first changed file
               git checkout --force main
               git checkout --force ${{ github.event.pull_request.head.ref }}
-              CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.event.pull_request.base.sha }} | head -n -1)
+              CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.head.sha }} ${{ github.event.pull_request.base.sha }} | head -1)
               git checkout --force -
               echo $CHANGED_FILE
               echo '{"commit_id":"${{ github.event.pull_request.head.sha }}","body":"Coverage is less than threshold of ${{ vars.MINIMUM_COVERAGE }}%","subject_type":"file","path":"'"$CHANGED_FILE"'"}'
